@@ -35,19 +35,9 @@ public class PlayerMouvement : MonoBehaviour
     private Rigidbody2D _rb;
 
     /// <summary>
-    /// Vitesse actuelle, utilisé par Unity
-    /// </summary>
-    private Vector3 velocity = Vector3.zero;
-
-    /// <summary>
     /// Détermine si le personne est au sol
     /// </summary>
     private bool _estAuSol;
-
-    /// <summary>
-    /// Durée du fondu d'un Vector3, utilisé par Unity
-    /// </summary>
-    private const float SMOOTH_TIME = .1f;
 
     void Start()
     {
@@ -57,14 +47,13 @@ public class PlayerMouvement : MonoBehaviour
         _estAuSol = false;
     }
 
+    void Update()
+    {
+        this.transform.Translate(_direction * _vitesse * Time.deltaTime);
+    }
+
     void FixedUpdate()
     {
-        // Déplacement horizontal
-        Vector2 targetVelocity = _direction * _vitesse * Time.deltaTime;
-        _direction.y = _rb.velocity.y;
-        _rb.velocity = Vector3.SmoothDamp(_rb.velocity,
-            targetVelocity, ref velocity, SMOOTH_TIME);
-
         // Saut de l'utilisateur
         if (_vaSaute && _estAuSol)
         {
