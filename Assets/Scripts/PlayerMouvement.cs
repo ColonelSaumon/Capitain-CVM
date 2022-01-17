@@ -47,7 +47,7 @@ public class PlayerMouvement : MonoBehaviour
     /// <summary>
     /// Durée du fondu d'un Vector3, utilisé par Unity
     /// </summary>
-    private const float SMOOTH_TIME = .05f;
+    private const float SMOOTH_TIME = .1f;
 
     void Start()
     {
@@ -61,6 +61,7 @@ public class PlayerMouvement : MonoBehaviour
     {
         // Déplacement horizontal
         Vector2 targetVelocity = _direction * _vitesse * Time.deltaTime;
+        _direction.y = _rb.velocity.y;
         _rb.velocity = Vector3.SmoothDamp(_rb.velocity,
             targetVelocity, ref velocity, SMOOTH_TIME);
 
@@ -69,6 +70,7 @@ public class PlayerMouvement : MonoBehaviour
         {
             _rb.AddForce(transform.up * _forceSaut, ForceMode2D.Impulse);
             _vaSaute = false;
+            _estAuSol = false;
         }
     }
 
@@ -96,14 +98,5 @@ public class PlayerMouvement : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         _estAuSol = collision.gameObject.tag.Equals("Tilemap");
-    }
-
-    /// <summary>
-    /// Appelé lorsque le personnage quitte une collision
-    /// </summary>
-    /// <param name="collision">Collider de l'autre GO</param>
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        _estAuSol = !collision.gameObject.tag.Equals("Tilemap");
     }
 }

@@ -6608,6 +6608,8 @@ MonoBehaviour:
   _direction: {x: 0, y: 0}
   _vitesse: 60
   _forceSaut: 50
+  _estAuSol: 0
+  SMOOTH_TIME: 0.05
 --- !u!50 &1562828970
 Rigidbody2D:
   serializedVersion: 4
