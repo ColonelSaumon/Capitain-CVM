@@ -2,8 +2,14 @@
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(SpriteRenderer))]
 public class PlayerMouvement : MonoBehaviour
 {
+    /// <summary>
+    /// Référence vers l'animator
+    /// </summary>
+    private Animator _animator;
     /// <summary>
     /// Représente la direction actuelle du joueur
     /// </summary>
@@ -39,17 +45,33 @@ public class PlayerMouvement : MonoBehaviour
     /// </summary>
     private bool _estAuSol;
 
+    /// <summary>
+    /// Référence au component SpriteRenderer
+    /// </summary>
+    private SpriteRenderer _sr;
+
     void Start()
     {
         // Lie _rb au ridigbody
         _rb = this.gameObject.GetComponent<Rigidbody2D>();
         // Initialise _estAuSol
         _estAuSol = false;
+        // Lie _animator à l'animator
+        _animator = this.gameObject.GetComponent<Animator>();
+        // Lie _sr à SpriteRenderer
+        _sr = this.gameObject.GetComponent<SpriteRenderer>();
     }
 
     void Update()
     {
         this.transform.Translate(_direction * _vitesse * Time.deltaTime);
+        // Établit la vitesse pour l'animator
+        _animator.SetFloat("Speed", Mathf.Abs(_direction.x * _vitesse));
+
+        if ((_direction.x < 0) != _sr.flipX)
+            _sr.flipX = _direction.x <= 0;
+        
+        _animator.SetFloat("JumpSpeed", Mathf.Abs(_rb.velocity.y));
     }
 
     void FixedUpdate()
