@@ -46,6 +46,9 @@ public class EnnemyPatrol : MonoBehaviour
         Vector3 direction = _cible.position - this.transform.position;
         this.transform.Translate(direction.normalized * _vitesse * Time.deltaTime, Space.World);
 
+        if (direction.x < 0 && !_sr.flipX) _sr.flipX = true;
+        else if (direction.x > 0 && _sr.flipX) _sr.flipX = false;
+
         if (Vector3.Distance(this.transform.position, _cible.position) < _distanceSeuil)
         {
             _indexPoint = (++_indexPoint) % _points.Length;
