@@ -18,7 +18,7 @@ public class EnnemyPatrol : MonoBehaviour
     /// <summary>
     /// Référence vers la cible actuelle de l'objet
     /// </summary>
-    private Transform _cible;
+    private Transform _cible = null;
     /// <summary>
     /// Permet de connaître la position actuelle de la cible dans le tableau
     /// </summary>
@@ -68,8 +68,11 @@ public class EnnemyPatrol : MonoBehaviour
         }
 
         // Ligne entre l'ennemi et la cible
-        Gizmos.color = Color.blue;
-        Gizmos.DrawLine(this.transform.position, _cible.position);
+        if (_cible != null)
+        {
+            Gizmos.color = Color.blue;
+            Gizmos.DrawLine(this.transform.position, _cible.position);
+        }
     }
 #endif
 }
