@@ -19,7 +19,7 @@ public class EnnemyBehaviour : MonoBehaviour
     {
         if (collision.gameObject.tag.Equals("Player"))
         {
-            float angle = Vector3.Angle(this.transform.up, collision.contacts[0].point);
+            float angle = Vector3.Angle(this.transform.up, collision.gameObject.transform.position);
             Debug.Log("Player contact, angle : " + angle);/* {collision point : " + pointCollision.ToString() + ", angle : " +
                 (Vector3.Angle(this.transform.position, pointCollision) * 180 / Mathf.PI).ToString() + "}" );*/
 
