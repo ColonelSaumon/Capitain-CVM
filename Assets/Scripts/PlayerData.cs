@@ -34,6 +34,9 @@ public class PlayerData
     /// </summary>
     public System.Action Gameover;
 
+    public int Energie { get { return this._energie; } }
+    public int Vie { get { return this._vie; } }
+
     public PlayerData()
     {
         this._vie = 0;
@@ -60,10 +63,11 @@ public class PlayerData
     public void DecrEnergie(int perte = 1)
     {
         this._energie -= perte;
-        if (this._energie < 0)
+        this.UIPerteEnergie();
+        if (this._energie <= 0)
         {
             DecrVie();
-            this.UIPerteEnergie();
+            this.DecrVie();
         }
     }
 
@@ -73,13 +77,11 @@ public class PlayerData
     public void DecrVie()
     {
         this._vie--;
+        this.UIPerteVie();
         if (this._vie <= 0)
             this.Gameover();
         else
-        {
-            this._energie = 4;
-            this.UIPerteVie();
-        }
+            this.IncrEnergie(MAX_ENERGIE);
     }
 
     /// <summary>
@@ -90,7 +92,10 @@ public class PlayerData
     {
         this._energie += gain;
         if (this._energie > MAX_ENERGIE)
+        {
             this._energie = MAX_ENERGIE;
+            this.UIPerteEnergie();
+        }
     }
 
     /// <summary>
@@ -100,5 +105,6 @@ public class PlayerData
     public void IncrVie(int gain)
     {
         this._vie += gain;
+        this.UIPerteVie();
     }
 }

@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     /// Contient les données de jeu
     /// </summary>
     private PlayerData _playerData;
+    public PlayerData PlayerData { get { return _playerData; } }
 
     private void Awake()
     {
@@ -32,5 +33,10 @@ public class GameManager : MonoBehaviour
     private void LoadPlayerData()
     {
         this._playerData = new PlayerData(4, 2);
+    }
+
+    private void Update()
+    {
+        Debug.Log($"Énergie {this._playerData.Energie} ; Vie {this._playerData.Vie}");
     }
 }
