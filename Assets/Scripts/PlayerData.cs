@@ -34,21 +34,23 @@ public class PlayerData
     /// </summary>
     public System.Action Gameover;
 
-    PlayerData()
+    public PlayerData()
     {
         this._vie = 0;
         this._energie = 0;
         this.UIPerteEnergie = null;
         this.UIPerteVie = null;
+        this.Gameover = null;
     }
 
-    PlayerData(int vie = 1, int energie = 2,
-        System.Action uiPerteEnergie = null, System.Action uiPerteVie = null)
+    public PlayerData(int vie = 1, int energie = 2,
+        System.Action uiPerteEnergie = null, System.Action uiPerteVie = null, System.Action gameOver = null)
     {
         this._vie = vie;
         this._energie = energie;
-        this.UIPerteEnergie = uiPerteEnergie;
-        this.UIPerteVie = uiPerteVie;
+        this.UIPerteEnergie += uiPerteEnergie;
+        this.UIPerteVie += uiPerteVie;
+        this.Gameover += gameOver;
     }
 
     /// <summary>
@@ -71,7 +73,7 @@ public class PlayerData
     public void DecrVie()
     {
         this._vie--;
-        if (this._vie < 0)
+        if (this._vie <= 0)
             this.Gameover();
         else
         {
