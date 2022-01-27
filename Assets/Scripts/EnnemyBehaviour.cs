@@ -14,7 +14,7 @@ public class EnnemyBehaviour : MonoBehaviour
     /// Angle de tolérange pour le calcul du saut sur la tête
     /// </summary>
     [SerializeField]
-    private float _toleranceAngle = 45f;
+    private float _toleranceAngle = 1.5f;
     /// <summary>
     /// Décrit la durée de l'invulnaribilité
     /// </summary>
@@ -55,9 +55,10 @@ public class EnnemyBehaviour : MonoBehaviour
     {
         if (collision.gameObject.tag.Equals("Player"))
         {
-            float angle = Vector3.Angle(this.transform.up, collision.gameObject.transform.position);
+            float angle = Vector3.Angle(this.transform.position, collision.contacts[0].point);
 
-            if (_toleranceAngle < angle && angle < _toleranceAngle + 90f && !_invulnerable) { 
+            if (angle < _toleranceAngle && !_invulnerable)
+            {
                 this._pv--;
                 _animator.SetTrigger("DegatActif");
                 _tempsDebutInvulnerabilite = Time.fixedTime;
