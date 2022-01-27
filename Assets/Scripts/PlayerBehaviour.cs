@@ -16,6 +16,11 @@ public class PlayerBehaviour : MonoBehaviour
     /// Représente le moment où l'invulnaribilité a commencé
     /// </summary>
     private float _tempsDebutInvulnerabilite;
+    /// <summary>
+    /// Angle de tolérange pour le calcul du saut sur la tête
+    /// </summary>
+    [SerializeField]
+    private float _toleranceAngle = 1.5f;
 
     private void Start()
     {
@@ -30,12 +35,17 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag.Equals("Ennemy") && !_invulnerable)
+        if (collision.gameObject.tag.Equals("Ennemy"))
         {
-            _animator.SetTrigger("DegatActif");
-            GameManager.Instance.PlayerData.DecrEnergie();
-            _tempsDebutInvulnerabilite = Time.fixedTime;
-            _invulnerable = true;
+            float angle = Vector3.Angle(this.transform.position, collision.contacts[0].point);
+
+            if (angle > _toleranceAngle && !_invulnerable)
+            {
+                _animator.SetTrigger("DegatActif");
+                GameManager.Instance.PlayerData.DecrEnergie();
+                _tempsDebutInvulnerabilite = Time.fixedTime;
+                _invulnerable = true;
+            }
         }
     }
 }
