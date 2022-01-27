@@ -34,9 +34,4 @@ public class GameManager : MonoBehaviour
     {
         this._playerData = new PlayerData(4, 2);
     }
-
-    private void Update()
-    {
-        Debug.Log($"Énergie {this._playerData.Energie} ; Vie {this._playerData.Vie}");
-    }
 }
