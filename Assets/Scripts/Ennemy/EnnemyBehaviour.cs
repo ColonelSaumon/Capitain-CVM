@@ -31,6 +31,11 @@ public class EnnemyBehaviour : MonoBehaviour
     /// Représente le moment où l'invulnaribilité a commencé
     /// </summary>
     private float _tempsDebutInvulnerabilite;
+    /// <summary>
+    /// Nombre de points octroyer lors de la destruction
+    /// </summary>
+    [SerializeField]
+    private int _pointDestruction = 5;
 
     private void Start()
     {
@@ -42,6 +47,7 @@ public class EnnemyBehaviour : MonoBehaviour
         if (this._pv <= 0)
         {
             _animator.SetTrigger("Destruction");
+            GameManager.Instance.PlayerData.IncrScore(this._pointDestruction);
             this.gameObject.GetComponent<BoxCollider2D>().enabled = false;
             this.gameObject.GetComponent<EnnemyPatrol>().enabled = false;
             GameObject.Destroy(this.gameObject, 0.5f);

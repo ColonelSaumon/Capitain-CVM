@@ -16,6 +16,10 @@ public class PlayerData
     /// </summary>
     private int _energie;
     /// <summary>
+    /// Représente le score obtenu
+    /// </summary>
+    private int _score;
+    /// <summary>
     /// Représente le maximum d'énergie du personnage
     /// </summary>
     public const int MAX_ENERGIE = 4;
@@ -36,21 +40,25 @@ public class PlayerData
 
     public int Energie { get { return this._energie; } }
     public int Vie { get { return this._vie; } }
+    public int Score { get { return this._score; } }
 
     public PlayerData()
     {
         this._vie = 0;
         this._energie = 0;
+        this._score = 0;
         this.UIPerteEnergie = null;
         this.UIPerteVie = null;
         this.Gameover = null;
     }
 
-    public PlayerData(int vie = 1, int energie = 2,
-        System.Action uiPerteEnergie = null, System.Action uiPerteVie = null, System.Action gameOver = null)
+    public PlayerData(int vie = 1, int energie = 2, int score = 0,
+        System.Action uiPerteEnergie = null, System.Action uiPerteVie = null,
+        System.Action gameOver = null)
     {
         this._vie = vie;
         this._energie = energie;
+        this._score = score;
         this.UIPerteEnergie += uiPerteEnergie;
         this.UIPerteVie += uiPerteVie;
         this.Gameover += gameOver;
@@ -92,18 +100,29 @@ public class PlayerData
         this._energie += gain;
         if (this._energie > MAX_ENERGIE)
         {
-            this._energie = MAX_ENERGIE;
-            this.UIPerteEnergie();
+            this._energie = 1;
+            this.IncrVie();
         }
+        
+        this.UIPerteEnergie();
     }
 
     /// <summary>
     /// Permet d'augmenter la vie
     /// </summary>
     /// <param name="gain">Gain d'augmentation</param>
-    public void IncrVie(int gain)
+    public void IncrVie(int gain = 1)
     {
         this._vie += gain;
         this.UIPerteVie();
+    }
+
+    /// <summary>
+    /// Augmente le score du joueur
+    /// </summary>
+    /// <param name="gain">Point gagné</param>
+    public void IncrScore(int gain = 1)
+    {
+        this._score += gain;
     }
 }
