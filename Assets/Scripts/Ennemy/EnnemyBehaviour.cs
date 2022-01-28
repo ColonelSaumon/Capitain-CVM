@@ -36,6 +36,10 @@ public class EnnemyBehaviour : MonoBehaviour
     /// </summary>
     [SerializeField]
     private int _pointDestruction = 5;
+    /// <summary>
+    /// Défini si l'objet est en cours de destruction
+    /// </summary>
+    private bool _destructionEnCours = false;
 
     private void Start()
     {
@@ -44,13 +48,14 @@ public class EnnemyBehaviour : MonoBehaviour
 
     private void Update()
     {
-        if (this._pv <= 0)
+        if (this._pv <= 0 && !this._destructionEnCours)
         {
             _animator.SetTrigger("Destruction");
             GameManager.Instance.PlayerData.IncrScore(this._pointDestruction);
             this.gameObject.GetComponent<BoxCollider2D>().enabled = false;
             this.gameObject.GetComponent<EnnemyPatrol>().enabled = false;
             GameObject.Destroy(this.gameObject, 0.5f);
+            this._destructionEnCours = true;
         }
 
         if (Time.fixedTime > _tempsDebutInvulnerabilite + DelaisInvulnerabilite)

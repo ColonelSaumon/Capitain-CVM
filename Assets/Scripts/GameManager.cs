@@ -34,4 +34,9 @@ public class GameManager : MonoBehaviour
     {
         this._playerData = new PlayerData(4, 2);
     }
+
+    private void Update()
+    {
+        Debug.Log($"Score : {this._playerData.Score}");
+    }
 }
