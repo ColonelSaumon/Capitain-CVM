@@ -57,12 +57,15 @@ public class EnnemyBehaviour : MonoBehaviour
         {
             float angle = Vector3.Angle(this.transform.position, collision.contacts[0].point);
 
-            if (angle < _toleranceAngle && !_invulnerable)
+            if (angle < _toleranceAngle)
             {
-                this._pv--;
-                _animator.SetTrigger("DegatActif");
-                _tempsDebutInvulnerabilite = Time.fixedTime;
-                _invulnerable = true;
+                if (!_invulnerable)
+                {
+                    this._pv--;
+                    _animator.SetTrigger("DegatActif");
+                    _tempsDebutInvulnerabilite = Time.fixedTime;
+                    _invulnerable = true;
+                }
             } else
             {
                 PlayerBehaviour pb = collision.gameObject.GetComponent<PlayerBehaviour>();

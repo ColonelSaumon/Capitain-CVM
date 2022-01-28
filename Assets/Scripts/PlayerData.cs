@@ -66,7 +66,6 @@ public class PlayerData
         this.UIPerteEnergie();
         if (this._energie <= 0)
         {
-            DecrVie();
             this.DecrVie();
         }
     }

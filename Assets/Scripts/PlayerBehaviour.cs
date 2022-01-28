@@ -16,11 +16,6 @@ public class PlayerBehaviour : MonoBehaviour
     /// Représente le moment où l'invulnaribilité a commencé
     /// </summary>
     private float _tempsDebutInvulnerabilite;
-    /// <summary>
-    /// Angle de tolérange pour le calcul du saut sur la tête
-    /// </summary>
-    [SerializeField]
-    private float _toleranceAngle = 1.5f;
 
     private void Start()
     {
