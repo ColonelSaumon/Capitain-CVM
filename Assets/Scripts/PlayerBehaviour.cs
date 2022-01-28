@@ -33,19 +33,14 @@ public class PlayerBehaviour : MonoBehaviour
             _invulnerable = false;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    public void CallEnnemyCollision()
     {
-        if (collision.gameObject.tag.Equals("Ennemy"))
+        if (!_invulnerable)
         {
-            float angle = Vector3.Angle(this.transform.position, collision.contacts[0].point);
-
-            if (angle > _toleranceAngle && !_invulnerable)
-            {
-                _animator.SetTrigger("DegatActif");
-                GameManager.Instance.PlayerData.DecrEnergie();
-                _tempsDebutInvulnerabilite = Time.fixedTime;
-                _invulnerable = true;
-            }
+            _animator.SetTrigger("DegatActif");
+            GameManager.Instance.PlayerData.DecrEnergie();
+            _tempsDebutInvulnerabilite = Time.fixedTime;
+            _invulnerable = true;
         }
     }
 }

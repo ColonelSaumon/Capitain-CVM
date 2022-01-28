@@ -63,6 +63,11 @@ public class EnnemyBehaviour : MonoBehaviour
                 _animator.SetTrigger("DegatActif");
                 _tempsDebutInvulnerabilite = Time.fixedTime;
                 _invulnerable = true;
+            } else
+            {
+                PlayerBehaviour pb = collision.gameObject.GetComponent<PlayerBehaviour>();
+                if (pb != null)
+                    pb.CallEnnemyCollision();
             }
         }
     }
