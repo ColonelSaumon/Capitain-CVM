@@ -99,7 +99,8 @@ public class PlayerMouvement : MonoBehaviour
     /// </summary>
     public void OnJump()
     {
-        _vaSaute = true;
+        if (_estAuSol)
+            _vaSaute = true;
     }
 
     /// <summary>
@@ -108,6 +109,7 @@ public class PlayerMouvement : MonoBehaviour
     /// <param name="collision">Collider de l'autre GO</param>
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        _estAuSol = collision.gameObject.tag.Equals("Tilemap");
+        _estAuSol = collision.gameObject.tag.Equals("Tilemap")
+            || collision.gameObject.tag.Equals("Plateform");
     }
 }
