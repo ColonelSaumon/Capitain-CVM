@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Tilemap
+  - Ennemy
+  - Plateform
+  - Tilemap Water
   layers:
   - Default
   - TransparentFX

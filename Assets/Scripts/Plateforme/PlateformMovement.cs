@@ -30,11 +30,17 @@ public class PlateformMovement : MonoBehaviour
     /// Seuil où l'objet change de cible de déplacement
     /// </summary>
     private float _distanceSeuil = 0.3f;
+    /// <summary>
+    /// Représente le collider du joueur
+    /// </summary>
+    [SerializeField]
+    private Transform _playerTransform;
 
     private void Start()
     {
         _indexPoint = 0;
         _cible = _points[_indexPoint];
+        _playerTransform = null;
     }
 
     // Update is called once per frame
@@ -53,6 +59,22 @@ public class PlateformMovement : MonoBehaviour
             _indexPoint += (_directionDroite ? 1 : -1);
             _cible = _points[_indexPoint];
         }
+
+        if (_playerTransform != null)
+            _playerTransform.Translate(direction.normalized * _vitesse * Time.deltaTime, Space.World);
+    }
+
+    private void FixedUpdate()
+    {
+        Collider2D[] _hitColliders = Physics2D.OverlapBoxAll(this.transform.position, this.transform.localScale * 3.8f, 0);
+        Transform playerTrouve = null;
+        for (int i = 0; i < _hitColliders.Length; i++)
+            if (_hitColliders[i].CompareTag("Player"))
+            {
+                playerTrouve = _hitColliders[i].gameObject.transform; Debug.Log("Player");
+            }
+
+        _playerTransform = playerTrouve;
     }
 
 #if UNITY_EDITOR
