@@ -43,8 +43,8 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log($"Score : {this._playerData.Score}");
-        Debug.Log($"Vie : {this._playerData.Vie}, Énergie : {this._playerData.Energie}");
+        //Debug.Log($"Score : {this._playerData.Score}");
+        //Debug.Log($"Vie : {this._playerData.Vie}, Énergie : {this._playerData.Energie}");
     }
     #endregion
     public void RechargerNiveau()

@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(Animator))]
-[RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(Rigidbody2D)),
+    RequireComponent(typeof(Animator)),
+    RequireComponent(typeof(SpriteRenderer))]
 public class PlayerMouvement : MonoBehaviour
 {
     /// <summary>
@@ -20,8 +20,7 @@ public class PlayerMouvement : MonoBehaviour
     /// Représente la vitesse actuelle du joueur
     /// Limité entre 0 et 6 m/s
     /// </summary>
-    [SerializeField]
-    [Range(0, 400)]
+    [SerializeField, Range(0, 400)]
     private float _vitesse = 60f;
 
     /// <summary>
@@ -50,6 +49,12 @@ public class PlayerMouvement : MonoBehaviour
     /// </summary>
     private SpriteRenderer _sr;
 
+    /// <summary>
+    /// Delegate définissant l'action qui doit être exécuter à
+    /// la demande du joueur
+    /// </summary>
+    public System.Action InteractionAction;
+
     void Start()
     {
         // Lie _rb au ridigbody
@@ -60,6 +65,8 @@ public class PlayerMouvement : MonoBehaviour
         _animator = this.gameObject.GetComponent<Animator>();
         // Lie _sr à SpriteRenderer
         _sr = this.gameObject.GetComponent<SpriteRenderer>();
+        // Au départ, aucune interaction
+        InteractionAction = null;
     }
 
     void Update()
@@ -111,5 +118,11 @@ public class PlayerMouvement : MonoBehaviour
     {
         _estAuSol = collision.gameObject.tag.Equals("Tilemap")
             || collision.gameObject.tag.Equals("Plateform");
+    }
+
+    public void OnAction()
+    {
+        if (InteractionAction != null)
+            InteractionAction();
     }
 }
