@@ -55,6 +55,12 @@ public class PlayerMouvement : MonoBehaviour
     /// </summary>
     public System.Action InteractionAction;
 
+    /// <summary>
+    /// Défini si le personne est dans l'action de monté
+    /// </summary>
+    [SerializeField]
+    private bool _enMonte;
+
     void Start()
     {
         // Lie _rb au ridigbody
@@ -67,24 +73,28 @@ public class PlayerMouvement : MonoBehaviour
         _sr = this.gameObject.GetComponent<SpriteRenderer>();
         // Au départ, aucune interaction
         InteractionAction = null;
+        // Initialise _enMonte
+        this._enMonte = false;
     }
 
     void Update()
     {
         this.transform.Translate(_direction * _vitesse * Time.deltaTime);
-        // Établit la vitesse pour l'animator
-        _animator.SetFloat("Speed", Mathf.Abs(_direction.x * _vitesse));
 
-        if ((_direction.x < 0) != _sr.flipX)
-            _sr.flipX = _direction.x <= 0;
-        
-        _animator.SetFloat("JumpSpeed", Mathf.Abs(_rb.velocity.y));
+        if (!_enMonte)
+        {
+            // Établit la vitesse pour l'animator
+            _animator.SetFloat("Speed", Mathf.Abs(_direction.x * _vitesse));
+
+            if ((_direction.x < 0) != _sr.flipX)
+                _sr.flipX = _direction.x <= 0;
+        }
     }
 
     void FixedUpdate()
     {
         // Saut de l'utilisateur
-        if (_vaSaute && _estAuSol)
+        if (!_enMonte && _vaSaute && _estAuSol)
         {
             _rb.AddForce(transform.up * _forceSaut, ForceMode2D.Impulse);
             _vaSaute = false;
@@ -98,7 +108,24 @@ public class PlayerMouvement : MonoBehaviour
     /// <param name="value">Valeur de l'input (ex. appuyer ou non)</param>
     public void OnHorizontal(InputValue value)
     {
-        _direction.x = value.Get<float>();
+        if (!_enMonte)
+        {
+            _direction.x = value.Get<float>();
+            _direction.y = 0;
+        }
+    }
+
+    /// <summary>
+    /// Méthode exécuté lorsque la personne utilisateur réalise l'InputAction Vertical
+    /// </summary>
+    /// <param name="value">Valeur de l'input (ex. appuyer ou non)</param>
+    public void OnVertical(InputValue value)
+    {
+        if (_enMonte)
+        {
+            _direction.x = 0;
+            _direction.y = value.Get<float>();
+        }
     }
 
     /// <summary>
@@ -124,5 +151,15 @@ public class PlayerMouvement : MonoBehaviour
     {
         if (InteractionAction != null)
             InteractionAction();
+    }
+
+    public void SetEnMonte(bool value = true)
+    {
+        this._enMonte = value;
+    }
+
+    public void SetDirectionToZero()
+    {
+        this._direction = Vector2.zero;
     }
 }

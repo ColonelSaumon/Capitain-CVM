@@ -16,9 +16,10 @@ public abstract class BaseInteraction : MonoBehaviour
     public abstract void DoAction();
 
     /// <summary>
-    /// Défini l'action à réaliser
+    /// Définit l'action à réaliser lors que l'on quitte
+    /// le collider
     /// </summary>
-    //protected abstract void InternalAction();
+    public virtual void ExitAction() { return; }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -34,6 +35,7 @@ public abstract class BaseInteraction : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            ExitAction();
             InteractionUI.Instance.DesactiveMessage();
             collision.gameObject.GetComponent<PlayerMouvement>().InteractionAction
                 -= this.DoAction;

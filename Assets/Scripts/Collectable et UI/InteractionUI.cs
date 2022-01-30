@@ -73,7 +73,7 @@ public class InteractionUI : MonoBehaviour
                 {
                     //if (device.name.Contains("Keyboard"))
                     //    this.SetKeyboardControlText();
-                    this.UpdateUIButtonLayout();
+                    InteractionUI.Instance.UpdateUIButtonLayout();
                 };
             //this.SetKeyboardControlText();
             this.UpdateUIButtonLayout();
