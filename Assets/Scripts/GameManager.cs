@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -21,13 +22,15 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         if (_instance != null)
-            DestroyImmediate(this.gameObject);
+            Destroy(this.gameObject);
+        else
+        {
+            _instance = this;
+            DontDestroyOnLoad(this.gameObject);
 
-        _instance = this;
-        DontDestroyOnLoad(this.gameObject);
-
-        // Initialisation des données de jeu
-        LoadPlayerData();
+            // Initialisation des données de jeu
+            LoadPlayerData();
+        }
     }
 
     private void LoadPlayerData()
@@ -38,5 +41,18 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         Debug.Log($"Score : {this._playerData.Score}");
+        Debug.Log($"Vie : {this._playerData.Vie}, Énergie : {this._playerData.Energie}");
+    }
+
+    public void RechargerNiveau()
+    {
+        this.PlayerData.UIPerteEnergie = null;
+        this.PlayerData.UIPerteVie = null;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
+        /*SceneManager.sceneLoaded += 
+            (Scene scene, LoadSceneMode mode) => {
+                this.PlayerData.UIPerteEnergie(); 
+                this.PlayerData.UIPerteVie(); 
+            };*/
     }
 }

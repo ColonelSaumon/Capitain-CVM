@@ -88,7 +88,10 @@ public class PlayerData
         if (this._vie <= 0)
             this.Gameover();
         else
+        {
             this.IncrEnergie(MAX_ENERGIE);
+            GameManager.Instance.RechargerNiveau();
+        }
     }
 
     /// <summary>
