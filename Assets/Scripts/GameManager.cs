@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    #region Properties
     /// <summary>
     /// Référence au GameManager
     /// </summary>
@@ -18,7 +19,9 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private PlayerData _playerData;
     public PlayerData PlayerData { get { return _playerData; } }
+    #endregion
 
+    #region Methods
     private void Awake()
     {
         if (_instance != null)
@@ -43,16 +46,12 @@ public class GameManager : MonoBehaviour
         Debug.Log($"Score : {this._playerData.Score}");
         Debug.Log($"Vie : {this._playerData.Vie}, Énergie : {this._playerData.Energie}");
     }
-
+    #endregion
     public void RechargerNiveau()
     {
         this.PlayerData.UIPerteEnergie = null;
         this.PlayerData.UIPerteVie = null;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
-        /*SceneManager.sceneLoaded += 
-            (Scene scene, LoadSceneMode mode) => {
-                this.PlayerData.UIPerteEnergie(); 
-                this.PlayerData.UIPerteVie(); 
-            };*/
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name,
+            LoadSceneMode.Single);
     }
 }

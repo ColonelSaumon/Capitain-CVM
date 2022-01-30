@@ -38,4 +38,14 @@ public class PlayerBehaviour : MonoBehaviour
             _invulnerable = true;
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Tilemap Water"))
+        {
+            this.gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
+            GameObject.Destroy(this.gameObject);
+            GameManager.Instance.PlayerData.DecrVie();
+        }
+    }
 }
