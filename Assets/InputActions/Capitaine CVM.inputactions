@@ -158,7 +158,7 @@
                 {
                     "name": "",
                     "id": "907232d5-6d42-4c65-a84d-2226ef20e577",
-                    "path": "<Keyboard>/q",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
@@ -169,7 +169,7 @@
                 {
                     "name": "",
                     "id": "a0bbcbf2-1185-45a0-9716-b3c987ba878d",
-                    "path": "<Gamepad>/buttonSouth",
+                    "path": "<Gamepad>/buttonEast",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",

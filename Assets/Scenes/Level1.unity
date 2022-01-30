@@ -1084,6 +1084,7 @@ GameObject:
   m_Component:
   - component: {fileID: 670076273}
   - component: {fileID: 670076274}
+  - component: {fileID: 670076275}
   m_Layer: 0
   m_Name: "\xC9chelle"
   m_TagString: Untagged
@@ -1131,6 +1132,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.6205318, y: 5.372919}
   m_EdgeRadius: 0
+--- !u!114 &670076275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 670076272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c82ed1d7acd512a4585cc094579899a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _messageInteraction: Interagir
 --- !u!1 &730512453
 GameObject:
   m_ObjectHideFlags: 0
@@ -30623,7 +30637,7 @@ GameObject:
   - component: {fileID: 1368718652}
   - component: {fileID: 1368718651}
   m_Layer: 5
-  m_Name: InterractionImage
+  m_Name: InteractionImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30666,19 +30680,19 @@ MonoBehaviour:
   _textKeyboardControl: {fileID: 741204312}
   _sprites:
   - Controler: 0
-    Sprite: {fileID: -3389422449498872133, guid: 1d51df085cbc02c4b99b456e6b66ed07,
+    Sprite: {fileID: 9081888276882993706, guid: b2517c413662d044abca5005c900a10f,
       type: 3}
   - Controler: 1
-    Sprite: {fileID: 1571488083266847205, guid: 1d51df085cbc02c4b99b456e6b66ed07,
+    Sprite: {fileID: 1036109271873938689, guid: b2517c413662d044abca5005c900a10f,
       type: 3}
   - Controler: 2
-    Sprite: {fileID: 6080825330750813463, guid: 1d51df085cbc02c4b99b456e6b66ed07,
+    Sprite: {fileID: 7422422816115830356, guid: b2517c413662d044abca5005c900a10f,
       type: 3}
   - Controler: 3
-    Sprite: {fileID: 6080825330750813463, guid: 1d51df085cbc02c4b99b456e6b66ed07,
+    Sprite: {fileID: 7422422816115830356, guid: b2517c413662d044abca5005c900a10f,
       type: 3}
   - Controler: 4
-    Sprite: {fileID: 4818545198378122777, guid: 1d51df085cbc02c4b99b456e6b66ed07,
+    Sprite: {fileID: -742732243334555545, guid: b2517c413662d044abca5005c900a10f,
       type: 3}
   _keyboardControlActionName: 19
 --- !u!114 &1368718652

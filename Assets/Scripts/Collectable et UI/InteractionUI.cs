@@ -28,6 +28,8 @@ public struct ControlerSprite
 [RequireComponent(typeof(Image))]
 public class InteractionUI : MonoBehaviour
 {
+    public static InteractionUI Instance { get; private set;}
+
     /// <summary>
     /// Lien vers l'enfant contenant le texte
     /// </summary>
@@ -57,6 +59,8 @@ public class InteractionUI : MonoBehaviour
 
     private void Start()
     {
+        InteractionUI.Instance = this;
+
         _image = this.gameObject.GetComponent<Image>();
 
         if (_textInteraction == null || _textKeyboardControl == null)
@@ -74,6 +78,8 @@ public class InteractionUI : MonoBehaviour
             //this.SetKeyboardControlText();
             this.UpdateUIButtonLayout();
         }
+
+        DesactiveMessage();
     }
 
     public void UpdateUIButtonLayout()
@@ -129,5 +135,23 @@ public class InteractionUI : MonoBehaviour
         else if (type.Contains("iOSGame"))
             return _sprites.Find(x => x.Controler.Equals(ControlerType.IOS_GAMEPAD)).Sprite;
         else return null;
+    }
+
+    /// <summary>
+    /// Affiche le GO avec le message
+    /// </summary>
+    /// <param name="message">Message à afficher</param>
+    public void ActiveMessage(string message)
+    {
+        this._textInteraction.text = message;
+        this.gameObject.SetActive(true);
+    }
+
+    /// <summary>
+    /// Désactive le GO
+    /// </summary>
+    public void DesactiveMessage()
+    {
+        this.gameObject.SetActive(false);
     }
 }
