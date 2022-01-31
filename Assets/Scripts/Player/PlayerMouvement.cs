@@ -20,8 +20,14 @@ public class PlayerMouvement : MonoBehaviour
     /// Représente la vitesse actuelle du joueur
     /// Limité entre 0 et 6 m/s
     /// </summary>
-    [SerializeField, Range(0, 400)]
+    [SerializeField, Range(0, 25)]
     private float _vitesse = 60f;
+
+    /// <summary>
+    /// Représente la vitesse de monté du personnage
+    /// </summary>
+    [SerializeField, Range(0, 25)]
+    private float _vitesseMonte = 35f;
 
     /// <summary>
     /// Force du saut du joueur
@@ -79,7 +85,9 @@ public class PlayerMouvement : MonoBehaviour
 
     void Update()
     {
-        this.transform.Translate(_direction * _vitesse * Time.deltaTime);
+        this.transform.Translate(_direction *
+            (_enMonte ? _vitesseMonte : _vitesse)
+            * Time.deltaTime);
 
         if (!_enMonte)
         {
