@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class EchelleInteraction : BaseInteraction
 {
+    [SerializeField]
+    private BoxCollider2D _colliderPlateform;
+
     public override void ExitAction() { QuitterEchelle(); }
 
     public override void DoAction()
@@ -17,6 +20,8 @@ public class EchelleInteraction : BaseInteraction
         Rigidbody2D rb = pm.gameObject.GetComponent<Rigidbody2D>();
         rb.gravityScale = 0;
         rb.velocity = new Vector2(rb.velocity.x, 0);
+
+        _colliderPlateform.enabled = false;
         
         InteractionUI.Instance.ActiveMessage("Quitter l'échelle");
         pm.InteractionAction -= DoAction;
@@ -29,9 +34,11 @@ public class EchelleInteraction : BaseInteraction
 
         PlayerMouvement pm = GameObject.FindGameObjectWithTag("Player")
             .GetComponent<PlayerMouvement>();
-        pm.SetEnMonte(false);
         pm.gameObject.GetComponent<Rigidbody2D>().gravityScale = 1;
         pm.SetDirectionToZero();
+        pm.SetEnMonte(false);
+
+        _colliderPlateform.enabled = true;
 
         InteractionUI.Instance.ActiveMessage(this._messageInteraction);
         pm.InteractionAction -= QuitterEchelle;

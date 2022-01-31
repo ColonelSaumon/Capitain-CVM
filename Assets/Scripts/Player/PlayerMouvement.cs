@@ -145,6 +145,9 @@ public class PlayerMouvement : MonoBehaviour
     {
         _estAuSol = collision.gameObject.tag.Equals("Tilemap")
             || collision.gameObject.tag.Equals("Plateform");
+
+        if (_enMonte && collision.gameObject.CompareTag("Tilemap"))
+            OnAction();
     }
 
     public void OnAction()
@@ -160,6 +163,7 @@ public class PlayerMouvement : MonoBehaviour
 
     public void SetDirectionToZero()
     {
-        this._direction = Vector2.zero;
+        if (_enMonte)
+            this._direction = Vector2.zero;
     }
 }
