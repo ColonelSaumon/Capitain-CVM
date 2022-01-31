@@ -11,6 +11,7 @@ public class EchelleInteraction : BaseInteraction
 
     public override void DoAction()
     {
+
         // Placer le code pour l'action ici
         Debug.Log("Monter à l'échelle");
 
@@ -22,6 +23,8 @@ public class EchelleInteraction : BaseInteraction
         rb.velocity = new Vector2(rb.velocity.x, 0);
 
         _colliderPlateform.enabled = false;
+
+        pm.gameObject.GetComponent<Animator>().SetBool("EnMonte", true);
         
         InteractionUI.Instance.ActiveMessage("Quitter l'échelle");
         pm.InteractionAction -= DoAction;
@@ -39,6 +42,8 @@ public class EchelleInteraction : BaseInteraction
         pm.SetEnMonte(false);
 
         _colliderPlateform.enabled = true;
+
+        pm.gameObject.GetComponent<Animator>().SetBool("EnMonte", false);
 
         InteractionUI.Instance.ActiveMessage(this._messageInteraction);
         pm.InteractionAction -= QuitterEchelle;
