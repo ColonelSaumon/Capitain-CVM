@@ -20,6 +20,10 @@ public class PlayerData
     /// </summary>
     private int _score;
     /// <summary>
+    /// Liste des coffres ouverts dans le jeu
+    /// </summary>
+    private List<string> _chestOpenList;
+    /// <summary>
     /// Représente le maximum d'énergie du personnage
     /// </summary>
     public const int MAX_ENERGIE = 4;
@@ -41,6 +45,7 @@ public class PlayerData
     public int Energie { get { return this._energie; } }
     public int Vie { get { return this._vie; } }
     public int Score { get { return this._score; } }
+    public string[] ListeCoffreOuvert { get { return this._chestOpenList.ToArray(); } }
 
     public PlayerData()
     {
@@ -50,11 +55,12 @@ public class PlayerData
         this.UIPerteEnergie = null;
         this.UIPerteVie = null;
         this.Gameover = null;
+        this._chestOpenList = new List<string>();
     }
 
     public PlayerData(int vie = 1, int energie = 2, int score = 0,
         System.Action uiPerteEnergie = null, System.Action uiPerteVie = null,
-        System.Action gameOver = null)
+        System.Action gameOver = null, List<string> ChestList = null)
     {
         this._vie = vie;
         this._energie = energie;
@@ -62,6 +68,8 @@ public class PlayerData
         this.UIPerteEnergie += uiPerteEnergie;
         this.UIPerteVie += uiPerteVie;
         this.Gameover += gameOver;
+        if (ChestList == null)
+            this._chestOpenList = new List<string>();
     }
 
     /// <summary>
@@ -127,5 +135,25 @@ public class PlayerData
     public void IncrScore(int gain = 1)
     {
         this._score += gain;
+    }
+
+    /// <summary>
+    /// Ajoute le nom du coffre à la liste
+    /// </summary>
+    /// <param name="nom">Nom du coffre à ajouter</param>
+    public void AjouterCoffreOuvert(string nom)
+    {
+        this._chestOpenList.Add(nom);
+    }
+
+    /// <summary>
+    /// Détermine si le coffre est contenu dans la liste
+    /// des coffres ouverts
+    /// </summary>
+    /// <param name="nom">Nom du coffre à vérifier</param>
+    /// <returns>true si le coffre est ouvert, false sinon</returns>
+    public bool AvoirOuvertureCoffre(string nom)
+    {
+        return this._chestOpenList.Contains(nom);
     }
 }
