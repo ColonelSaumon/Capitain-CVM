@@ -11,16 +11,17 @@ public class PanneauInteraction : BaseInteraction
         if (_messageBox == null)
             throw new MissingReferenceException("Le canvas doit être renseigné.");
 
-        _messageBox.enabled = false;
+        _messageBox.gameObject.SetActive(false);
     }
 
     public override void DoAction()
     {
-        _messageBox.enabled = !_messageBox.enabled;
+        Debug.Log("DoAction");
+        _messageBox.gameObject.SetActive(true);
     }
 
     public override void ExitAction()
     {
-        _messageBox.enabled = false;
+        _messageBox.gameObject.SetActive(false);
     }
 }

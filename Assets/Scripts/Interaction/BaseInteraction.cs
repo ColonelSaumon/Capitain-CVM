@@ -59,8 +59,7 @@ public abstract class BaseInteraction : MonoBehaviour
         {
             ExitAction();
             InteractionUI.Instance.DesactiveMessage();
-            collision.gameObject.GetComponent<PlayerMouvement>().InteractionAction
-                -= this.DoAction;
+            collision.gameObject.GetComponent<PlayerMouvement>().InteractionAction = null;
         }
     }
 }

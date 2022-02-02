@@ -48,6 +48,7 @@ public class PlayerMouvement : MonoBehaviour
     /// <summary>
     /// Détermine si le personne est au sol
     /// </summary>
+    [SerializeField]
     private bool _estAuSol;
 
     /// <summary>
