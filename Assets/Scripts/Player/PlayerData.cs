@@ -5,6 +5,7 @@ using UnityEngine;
 /// <summary>
 /// Représente les données de jeu
 /// </summary>
+[System.Serializable]
 public class PlayerData
 {
     /// <summary>
@@ -68,8 +69,9 @@ public class PlayerData
         this.UIPerteEnergie += uiPerteEnergie;
         this.UIPerteVie += uiPerteVie;
         this.Gameover += gameOver;
-        if (ChestList == null)
-            this._chestOpenList = new List<string>();
+        this._chestOpenList = new List<string>();
+        if (ChestList != null)
+            this._chestOpenList = ChestList;
     }
 
     /// <summary>

@@ -36,6 +36,22 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        List<string> cl = new List<string>();
+        cl.Add("test_1");
+        cl.Add("test_2");
+        cl.Add("test_3");
+        cl.Add("test_4");
+        PlayerData test = new PlayerData(
+            15, 42, 2022, ChestList: cl
+            );
+        string jdata = PlayerDataJson.WriteJson(test);
+        Debug.Log(jdata);
+        PlayerData read = PlayerDataJson.ReadJson(jdata);
+        Debug.Log(read.Vie);
+    }
+
     private void LoadPlayerData()
     {
         this._playerData = new PlayerData(4, 2);
