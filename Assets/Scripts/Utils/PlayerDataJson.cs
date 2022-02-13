@@ -79,7 +79,9 @@ public static class PlayerDataJson
                     score = int.Parse(parametre[1].Replace(",", string.Empty));
                     break;
                 case "\"chestOpenList\"":
-                    if(parametre[1] != "[")
+                    if (parametre[1] == "[]")
+                        break;
+                    else if (parametre[1] != "[")
                         throw new JSONFormatExpcetion();
                     while(lignes[++i] != "]")
                     {

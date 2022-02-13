@@ -73,13 +73,27 @@ public class GameManager : MonoBehaviour
 
     private void LoadPlayerData()
     {
-        this._playerData = new PlayerData(4, 2);
+        string path = Path.Combine(Application.persistentDataPath, "savedata.json");
+        if (File.Exists(path))
+        {
+            using (StreamReader stream = new StreamReader(
+            Path.Combine(Application.persistentDataPath, "savedata.json"),
+            System.Text.Encoding.UTF8))
+            {
+                this._playerData = PlayerDataJson.ReadJson(stream.ReadToEnd());
+            }
+        }
+        else
+        {
+            this._playerData = new PlayerData(4, 2);
+            SaveData();
+        }
     }
 
     private void Update()
     {
-        //Debug.Log($"Score : {this._playerData.Score}");
-        //Debug.Log($"Vie : {this._playerData.Vie}, Énergie : {this._playerData.Energie}");
+        Debug.Log($"Score : {this._playerData.Score}");
+        Debug.Log($"Vie : {this._playerData.Vie}, Énergie : {this._playerData.Energie}");
         //string msg = string.Empty;
         //foreach (string chest in PlayerData.ListeCoffreOuvert)
         //{
