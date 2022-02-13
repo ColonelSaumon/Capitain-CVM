@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -38,18 +39,36 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        List<string> cl = new List<string>();
-        cl.Add("test_1");
-        cl.Add("test_2");
-        cl.Add("test_3");
-        cl.Add("test_4");
-        PlayerData test = new PlayerData(
-            15, 42, 2022, ChestList: cl
-            );
-        string jdata = PlayerDataJson.WriteJson(test);
-        Debug.Log(jdata);
-        PlayerData read = PlayerDataJson.ReadJson(jdata);
-        Debug.Log(read.Vie);
+        //List<string> cl = new List<string>();
+        //cl.Add("test_1");
+        //cl.Add("test_2");
+        //cl.Add("test_3");
+        //cl.Add("test_4");
+        //PlayerData test = new PlayerData(
+        //    15, 42, 2022, ChestList: cl
+        //    );
+        //string jdata = PlayerDataJson.WriteJson(test);
+        //Debug.Log(jdata);
+        //PlayerData read = PlayerDataJson.ReadJson(jdata);
+        //Debug.Log(read.Vie);
+        SaveData();
+    }
+
+    public void SaveData()
+    {
+        StartCoroutine(SaveData(this.PlayerData));
+    }
+
+    public IEnumerator SaveData(PlayerData data)
+    {
+        using (StreamWriter stream = new StreamWriter(
+            Path.Combine(Application.persistentDataPath, "savedata.json"),
+            false, System.Text.Encoding.UTF8))
+        {
+            stream.Write(PlayerDataJson.WriteJson(data));
+            Debug.Log(Path.Combine(Application.persistentDataPath, "savedata.json"));
+        }
+        yield return new WaitForEndOfFrame();
     }
 
     private void LoadPlayerData()

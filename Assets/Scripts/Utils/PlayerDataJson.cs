@@ -15,9 +15,9 @@ public static class PlayerDataJson
         string tab = "\t";
         string newline = "\n";
         string json = "{" + newline;
-        json += tab + "\"vie\":" + data.Vie + newline;
-        json += tab + "\"energie\":" + data.Energie + newline;
-        json += tab + "\"score\":" + data.Score + newline;
+        json += tab + "\"vie\":" + data.Vie + "," + newline;
+        json += tab + "\"energie\":" + data.Energie + "," + newline;
+        json += tab + "\"score\":" + data.Score + "," + newline;
         json += tab + "\"chestOpenList\":[";
         if (data.ListeCoffreOuvert.Length > 0)
         {
@@ -69,13 +69,14 @@ public static class PlayerDataJson
             switch(parametre[0])
             {
                 case "\"vie\"":
-                    vie = int.Parse(parametre[1]);
+                    vie = int.Parse(parametre[1]
+                        .Replace(",", string.Empty));
                     break;
                 case "\"energie\"":
-                    energie = int.Parse(parametre[1]);
+                    energie = int.Parse(parametre[1].Replace(",", string.Empty));
                     break;
                 case "\"score\"":
-                    score = int.Parse(parametre[1]);
+                    score = int.Parse(parametre[1].Replace(",", string.Empty));
                     break;
                 case "\"chestOpenList\"":
                     if(parametre[1] != "[")
