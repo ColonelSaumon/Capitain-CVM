@@ -97,14 +97,15 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log($"Score : {this._playerData.Score}");
-        Debug.Log($"Vie : {this._playerData.Vie}, Énergie : {this._playerData.Energie}");
+        //Debug.Log($"Score : {this._playerData.Score}");
+        //Debug.Log($"Vie : {this._playerData.Vie}, Énergie : {this._playerData.Energie}");
         //string msg = string.Empty;
         //foreach (string chest in PlayerData.ListeCoffreOuvert)
         //{
         //    msg += chest + ";";
         //}
         //Debug.Log($"ChestList : {msg}");
+        this.gameObject.transform.position = Camera.main.transform.position;
     }
     #endregion
     public void RechargerNiveau()
