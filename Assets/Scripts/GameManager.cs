@@ -61,15 +61,16 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator SaveData(PlayerData data)
     {
-        //using (StreamWriter stream = new StreamWriter(
-        //    Path.Combine(Application.persistentDataPath, "savedata.json"),
-        //    false, System.Text.Encoding.UTF8))
-        //{
-        //    stream.Write(PlayerDataJson.WriteJson(data));
-        //    Debug.Log(Path.Combine(Application.persistentDataPath, "savedata.json"));
-        //}
-        DataManipulator manipulator = new DataManipulator();
-        manipulator.Encrypt(PlayerDataJson.WriteJson(data), Path.Combine(Application.persistentDataPath, "savedata_encrypt.json"));
+        using (StreamWriter stream = new StreamWriter(
+            Path.Combine(Application.persistentDataPath, "savedata_encrypt.json"),
+            false, System.Text.Encoding.UTF8))
+        {
+            DataManipulator manipulator = new DataManipulator();
+            stream.Write(manipulator.Encrypt(PlayerDataJson.WriteJson(data)));
+            Debug.Log(Path.Combine(Application.persistentDataPath, "savedata_encrypt.json"));
+        }
+        //DataManipulator manipulator = new DataManipulator();
+        //manipulator.Encrypt(PlayerDataJson.WriteJson(data), Path.Combine(Application.persistentDataPath, "savedata_encrypt.json"));
         yield return new WaitForEndOfFrame();
     }
 
@@ -78,14 +79,14 @@ public class GameManager : MonoBehaviour
         string path = Path.Combine(Application.persistentDataPath, "savedata_encrypt.json");
         if (File.Exists(path))
         {
-            //using (StreamReader stream = new StreamReader(
-            //Path.Combine(Application.persistentDataPath, "savedata.json"),
-            //System.Text.Encoding.UTF8))
-            //{
-            //    this._playerData = PlayerDataJson.ReadJson(stream.ReadToEnd());
-            //}
-            DataManipulator manipulator = new DataManipulator();
-            this._playerData = manipulator.Decrypt(path);
+            using (StreamReader stream = new StreamReader(path,
+            System.Text.Encoding.UTF8))
+            {
+                DataManipulator manipulator = new DataManipulator();
+                this._playerData = PlayerDataJson.ReadJson(manipulator.Decrypt(stream.ReadToEnd()));
+            }
+            //DataManipulator manipulator = new DataManipulator();
+            //this._playerData = manipulator.Decrypt(path);
         }
         else
         {

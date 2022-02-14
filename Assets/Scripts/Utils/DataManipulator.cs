@@ -1,6 +1,6 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
-using System.IO;
+using System;
 
 /// <summary>
 /// Permet la manipulation des données pour l'encryptage
@@ -8,61 +8,50 @@ using System.IO;
 public sealed class DataManipulator
 {
 
-    private byte[] data_key;
-    private byte[] data_pkey;
+    private string key = "XCtmd6zUnPVgT9dW6vkuyNRbxsjvQqpM";
+    private string iv = "QyEgUUI9OyLmUA8a";
 
-    public DataManipulator() {
-        string key = "A#NaOqBC";
-        data_key = Encoding.UTF8
-            .GetBytes(key);
-        data_pkey = Encoding.UTF8
-            .GetBytes("f06a78bd586d05323e2d9b620743d3b1");
+    /// <summary>
+    /// Permet d'encrypter une chaîne de caractère
+    /// </summary>
+    /// <param name="inputData">Chaîne à encrypter</param>
+    /// <returns>Chaîne encrypter</returns>
+    public string Encrypt(string inputData)
+    {
+        AesCryptoServiceProvider AEScryptoProvider = new AesCryptoServiceProvider();
+        AEScryptoProvider.BlockSize = 128;
+        AEScryptoProvider.KeySize = 256;
+        AEScryptoProvider.Key = ASCIIEncoding.ASCII.GetBytes(key);
+        AEScryptoProvider.IV = ASCIIEncoding.ASCII.GetBytes(iv);
+        AEScryptoProvider.Mode = CipherMode.CBC;
+        AEScryptoProvider.Padding = PaddingMode.PKCS7;
+
+        byte[] txtByteData = ASCIIEncoding.ASCII.GetBytes(inputData);
+        ICryptoTransform trnsfrm = AEScryptoProvider.CreateEncryptor(AEScryptoProvider.Key, AEScryptoProvider.IV);
+
+        byte[] result = trnsfrm.TransformFinalBlock(txtByteData, 0, txtByteData.Length);
+        return Convert.ToBase64String(result);
     }
 
-    public void Encrypt(string plainText, string path)
+    /// <summary>
+    /// Permet de décrypter une chaîne de caractère
+    /// </summary>
+    /// <param name="inputData">Chaîne à décrypter</param>
+    /// <returns>Chaîne décrypter</returns>
+    public string Decrypt(string inputData)
     {
-        using (DESCryptoServiceProvider des = new DESCryptoServiceProvider())
-        {
-            ICryptoTransform encrypto = des.CreateEncryptor(data_key, data_pkey);
+        AesCryptoServiceProvider AEScryptoProvider = new AesCryptoServiceProvider();
+        AEScryptoProvider.BlockSize = 128;
+        AEScryptoProvider.KeySize = 256;
+        AEScryptoProvider.Key = ASCIIEncoding.ASCII.GetBytes(key);
+        AEScryptoProvider.IV = ASCIIEncoding.ASCII.GetBytes(iv);
+        AEScryptoProvider.Mode = CipherMode.CBC;
+        AEScryptoProvider.Padding = PaddingMode.PKCS7;
 
-            using (MemoryStream msEncrypt = new MemoryStream())
-            {
-                using (CryptoStream csEncrypt = new CryptoStream(msEncrypt, encrypto, CryptoStreamMode.Write))
-                {
-                    using (StreamWriter streamWriter = new StreamWriter(path))
-                    {
-                        byte[] cypto = Encoding.UTF8.GetBytes(plainText);
-                        csEncrypt.Write(cypto, 0, cypto.Length);
-                        csEncrypt.FlushFinalBlock();
-                        streamWriter.Write(Encoding.UTF8.GetString(msEncrypt.ToArray()));
-                    }
-                }
-            }
-        }
-    }
+        byte[] txtByteData = Convert.FromBase64String(inputData);
+        ICryptoTransform trnsfrm = AEScryptoProvider.CreateDecryptor();
 
-    public PlayerData Decrypt(string path)
-    {
-        string json = string.Empty;
-        using (DESCryptoServiceProvider des = new DESCryptoServiceProvider())
-        {
-            ICryptoTransform encrypto = des.CreateEncryptor(data_key, data_pkey);
-
-            using (MemoryStream msEncrypt = new MemoryStream())
-            {
-                using (CryptoStream csEncrypt = new CryptoStream(msEncrypt, encrypto, CryptoStreamMode.Write))
-                {
-                    using (StreamReader streamReader = new StreamReader(path))
-                    {
-                        byte[] inputDecrypt = Encoding.UTF8.GetBytes(streamReader.ReadToEnd());
-                        csEncrypt.Write(inputDecrypt, 0, inputDecrypt.Length);
-                        csEncrypt.FlushFinalBlock();
-                        json = Encoding.UTF8.GetString(msEncrypt.ToArray());
-                    }
-                }
-            }
-        }
-
-        return PlayerDataJson.ReadJson(json);
+        byte[] result = trnsfrm.TransformFinalBlock(txtByteData, 0, txtByteData.Length);
+        return ASCIIEncoding.ASCII.GetString(result);
     }
 }
