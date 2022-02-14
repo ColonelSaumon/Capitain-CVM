@@ -20,6 +20,9 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private PlayerData _playerData;
     public PlayerData PlayerData { get { return _playerData; } }
+
+    private AudioManager _audioManager;
+    public AudioManager AudioManager { get { return _audioManager; } }
     #endregion
 
     #region Methods
@@ -34,11 +37,15 @@ public class GameManager : MonoBehaviour
 
             // Initialisation des données de jeu
             LoadPlayerData();
+            _audioManager = this.GetComponent<AudioManager>();
         }
     }
 
     private void Start()
     {
+        SaveData();
+        SceneManager.activeSceneChanged += ChangementScene;
+        ChangementScene(new Scene(), SceneManager.GetActiveScene());
         //List<string> cl = new List<string>();
         //cl.Add("test_1");
         //cl.Add("test_2");
@@ -51,7 +58,6 @@ public class GameManager : MonoBehaviour
         //Debug.Log(jdata);
         //PlayerData read = PlayerDataJson.ReadJson(jdata);
         //Debug.Log(read.Vie);
-        SaveData();
     }
 
     public void SaveData()
@@ -105,9 +111,8 @@ public class GameManager : MonoBehaviour
         //    msg += chest + ";";
         //}
         //Debug.Log($"ChestList : {msg}");
-        this.gameObject.transform.position = Camera.main.transform.position;
     }
-    #endregion
+
     public void RechargerNiveau()
     {
         this.PlayerData.UIPerteEnergie = null;
@@ -115,4 +120,23 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name,
             LoadSceneMode.Single);
     }
+
+    private void OnApplicationQuit()
+    {
+        SaveData();
+    }
+
+    public void ChangerScene(string nomScene)
+    {
+        _audioManager.StopAudio(0.3f);
+        GameObject.Find("Fondu").SetActive(true);
+        SceneManager.LoadScene(nomScene);
+    }
+
+    public void ChangementScene(Scene current, Scene next)
+    {
+        GameObject.Find("Fondu").SetActive(false);
+    }
+
+    #endregion
 }
