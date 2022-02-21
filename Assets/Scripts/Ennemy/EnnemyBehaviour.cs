@@ -66,22 +66,22 @@ public class EnnemyBehaviour : MonoBehaviour
     {
         if (collision.gameObject.tag.Equals("Player"))
         {
-            float angle = Vector3.Angle(this.transform.position, collision.contacts[0].point);
+            PlayerBehaviour pb = collision.gameObject.GetComponent<PlayerBehaviour>();
+            if (pb != null)
+                pb.CallEnnemyCollision();
+        }
+    }
 
-            if (angle < _toleranceAngle)
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag.Equals("Player"))
+        {
+            if (!_invulnerable)
             {
-                if (!_invulnerable)
-                {
-                    this._pv--;
-                    _animator.SetTrigger("DegatActif");
-                    _tempsDebutInvulnerabilite = Time.fixedTime;
-                    _invulnerable = true;
-                }
-            } else
-            {
-                PlayerBehaviour pb = collision.gameObject.GetComponent<PlayerBehaviour>();
-                if (pb != null)
-                    pb.CallEnnemyCollision();
+                this._pv--;
+                _animator.SetTrigger("DegatActif");
+                _tempsDebutInvulnerabilite = Time.fixedTime;
+                _invulnerable = true;
             }
         }
     }
