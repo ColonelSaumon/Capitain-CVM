@@ -9,11 +9,15 @@ public class EnergyUpgrade : MonoBehaviour
     /// </summary>
     [SerializeField]
     private int _regainEnergie = 1;
+    [SerializeField]
+    private AudioClip _clip;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag.Equals("Player"))
         {
+            GameManager.Instance.AudioManager
+                .PlayClipAtPoint(_clip, this.transform.position);
             GameManager.Instance
                 .PlayerData.IncrEnergie(this._regainEnergie);
             GameObject.Destroy(this.gameObject);

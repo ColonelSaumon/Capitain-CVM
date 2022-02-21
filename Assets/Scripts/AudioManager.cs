@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Audio;
 
 /// <summary>
 /// Représente un élément audio avec un nom (étiquette)
@@ -21,6 +22,17 @@ public class AudioManager : MonoBehaviour
     /// </summary>
     [SerializeField]
     private AudioElement[] _playlist;
+    /// <summary>
+    /// Représente le AudioMixer pour le son
+    /// </summary>
+    [SerializeField]
+    private AudioMixerGroup _soundGroup;
+    /// <summary>
+    /// Distance maximale entre l'objet est la source audio
+    /// à jouer
+    /// </summary>
+    [SerializeField]
+    private float _effetDistanceMax;
 
     /// <summary>
     /// Référence vers l'audio source de l'objet
@@ -96,5 +108,23 @@ public class AudioManager : MonoBehaviour
             _source.Play();
         else
             StartCoroutine(FadeIn(delay));
+    }
+
+    public AudioSource PlayClipAtPoint(AudioClip clip, Vector3 pos)
+    {
+        if (Vector3.Distance(GameObject.FindGameObjectWithTag("Player").transform.position, pos) <= _effetDistanceMax)
+        {
+            GameObject go = new GameObject("Effet Source");
+            go.transform.position = pos;
+            AudioSource audio = go.AddComponent<AudioSource>();
+            audio.clip = clip;
+            audio.outputAudioMixerGroup = _soundGroup;
+            audio.spatialBlend = 0;
+            audio.Play();
+            Destroy(go, clip.length);
+            return audio;
+        }
+
+        return null;
     }
 }
