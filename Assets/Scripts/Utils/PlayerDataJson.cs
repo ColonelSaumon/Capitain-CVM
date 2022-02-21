@@ -18,6 +18,9 @@ public static class PlayerDataJson
         json += tab + "\"vie\":" + data.Vie + "," + newline;
         json += tab + "\"energie\":" + data.Energie + "," + newline;
         json += tab + "\"score\":" + data.Score + "," + newline;
+        json += tab + "\"volumeGeneral\":" + data.VolumeGeneral + "," + newline; 
+        json += tab + "\"volumeMusique\":" + data.VolumeMusique + "," + newline; 
+        json += tab + "\"volumeEffet\":" + data.VolumeEffet + "," + newline; 
         json += tab + "\"chestOpenList\":[";
         if (data.ListeCoffreOuvert.Length > 0)
         {
@@ -56,6 +59,7 @@ public static class PlayerDataJson
         json = json.Replace("\t", string.Empty);
 
         int vie = 0, energie = 0, score = 0;
+        float vlmGeneral = 0, vlmMusique = 0, vlmEffet = 0;
         List<string> chests = new List<string>();
         string[] lignes = json.Split('\n');
         
@@ -78,6 +82,15 @@ public static class PlayerDataJson
                 case "\"score\"":
                     score = int.Parse(parametre[1].Replace(",", string.Empty));
                     break;
+                case "\"volumeGeneral\"":
+                    vlmGeneral = float.Parse(parametre[1].Replace(",", string.Empty));
+                    break;
+                case "\"volumeMusique\"":
+                    vlmMusique = float.Parse(parametre[1].Replace(",", string.Empty));
+                    break;
+                case "\"volumeEffet\"":
+                    vlmEffet = float.Parse(parametre[1].Replace(",", string.Empty));
+                    break;
                 case "\"chestOpenList\"":
                     if (parametre[1] == "[]")
                         break;
@@ -93,7 +106,7 @@ public static class PlayerDataJson
             }
         }
 
-        return new PlayerData(vie, energie, score, ChestList: chests);
+        return new PlayerData(vie, energie, score, vlmGeneral, vlmMusique, vlmEffet, ChestList: chests);
     }
 }
 

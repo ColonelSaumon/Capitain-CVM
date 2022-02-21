@@ -75,8 +75,6 @@ public class GameManager : MonoBehaviour
             stream.Write(manipulator.Encrypt(PlayerDataJson.WriteJson(data)));
             Debug.Log(Path.Combine(Application.persistentDataPath, "savedata_encrypt.json"));
         }
-        //DataManipulator manipulator = new DataManipulator();
-        //manipulator.Encrypt(PlayerDataJson.WriteJson(data), Path.Combine(Application.persistentDataPath, "savedata_encrypt.json"));
         yield return new WaitForEndOfFrame();
     }
 
@@ -111,6 +109,7 @@ public class GameManager : MonoBehaviour
         //    msg += chest + ";";
         //}
         //Debug.Log($"ChestList : {msg}");
+        //Debug.Log($"Volume général : {_playerData.VolumeGeneral}, Volume musique : {_playerData.VolumeMusique}, Volume effets : {_playerData.VolumeEffet}");
     }
 
     public void RechargerNiveau()
