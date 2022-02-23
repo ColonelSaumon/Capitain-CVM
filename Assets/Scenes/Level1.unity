@@ -49686,6 +49686,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ennemi
       objectReference: {fileID: 0}
+    - target: {fileID: 965956143555325360, guid: 437762485d4e86445afd167003aa9e2e,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 1.0058126
+      objectReference: {fileID: 0}
+    - target: {fileID: 965956143555325360, guid: 437762485d4e86445afd167003aa9e2e,
+        type: 3}
+      propertyPath: m_Offset.x
+      value: 0.027067661
+      objectReference: {fileID: 0}
     - target: {fileID: 965956143856612540, guid: 437762485d4e86445afd167003aa9e2e,
         type: 3}
       propertyPath: m_LocalPosition.x
