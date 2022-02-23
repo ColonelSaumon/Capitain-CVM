@@ -33,6 +33,11 @@ public class AudioManager : MonoBehaviour
     /// </summary>
     [SerializeField]
     private float _effetDistanceMax;
+    /// <summary>
+    /// Représente le mixer du jeu
+    /// </summary>
+    [SerializeField]
+    private AudioMixer _mixer;
 
     /// <summary>
     /// Référence vers l'audio source de l'objet
@@ -46,6 +51,11 @@ public class AudioManager : MonoBehaviour
         SceneManager.activeSceneChanged += ChangementScene;
         // Pour l'exécuter imédiatement
         ChangementScene(new Scene(), SceneManager.GetActiveScene());
+
+        // _mixer est de type AudioMixer
+        _mixer.SetFloat("Master", GameManager.Instance.PlayerData.VolumeGeneral);
+        _mixer.SetFloat("Musique", GameManager.Instance.PlayerData.VolumeMusique);
+        _mixer.SetFloat("Effets", GameManager.Instance.PlayerData.VolumeEffet);
     }
 
     void ChangementScene(Scene current, Scene next)

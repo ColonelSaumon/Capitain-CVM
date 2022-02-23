@@ -65,6 +65,7 @@ MonoBehaviour:
   _soundGroup: {fileID: -2666042404274068546, guid: dad7e6d96af1a0047a0c44db2ed5ee7d,
     type: 2}
   _effetDistanceMax: 15
+  _mixer: {fileID: 24100000, guid: dad7e6d96af1a0047a0c44db2ed5ee7d, type: 2}
 --- !u!82 &387850250589047655
 AudioSource:
   m_ObjectHideFlags: 0

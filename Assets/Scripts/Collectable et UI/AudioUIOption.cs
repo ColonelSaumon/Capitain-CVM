@@ -18,6 +18,18 @@ public class AudioUIOption : MonoBehaviour
     private void Start()
     {
         _slider = this.gameObject.GetComponent<Slider>();
+        switch(_parameter)
+        {
+            case "Master":
+                _slider.value = GameManager.Instance.PlayerData.VolumeGeneral;
+                break;
+            case "Musique":
+                _slider.value = GameManager.Instance.PlayerData.VolumeMusique;
+                break;
+            case "Effets":
+                _slider.value = GameManager.Instance.PlayerData.VolumeEffet;
+                break;
+        }
         _slider.onValueChanged.AddListener(ChangeVolume);
         _valeurChanger = false;
     }

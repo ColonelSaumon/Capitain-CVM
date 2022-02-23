@@ -54,7 +54,7 @@ public class EnnemyBehaviour : MonoBehaviour
             GameManager.Instance.PlayerData.IncrScore(this._pointDestruction);
             this.gameObject.GetComponent<BoxCollider2D>().enabled = false;
             this.gameObject.GetComponent<EnnemyPatrol>().enabled = false;
-            GameObject.Destroy(this.gameObject, 0.5f);
+            GameObject.Destroy(this.transform.parent.gameObject, 0.5f);
             this._destructionEnCours = true;
         }
 
@@ -64,7 +64,7 @@ public class EnnemyBehaviour : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag.Equals("Player"))
+        if (collision.gameObject.tag.Equals("Player") && !_invulnerable)
         {
             PlayerBehaviour pb = collision.gameObject.GetComponent<PlayerBehaviour>();
             if (pb != null)

@@ -71,8 +71,8 @@ public class GameManager : MonoBehaviour
             Path.Combine(Application.persistentDataPath, "savedata_encrypt.json"),
             false, System.Text.Encoding.UTF8))
         {
-            DataManipulator manipulator = new DataManipulator();
-            stream.Write(manipulator.Encrypt(PlayerDataJson.WriteJson(data)));
+            //DataManipulator manipulator = new DataManipulator();
+            stream.Write(/*manipulator.Encrypt(*/PlayerDataJson.WriteJson(data)/*)*/);
             Debug.Log(Path.Combine(Application.persistentDataPath, "savedata_encrypt.json"));
         }
         yield return new WaitForEndOfFrame();
@@ -86,8 +86,8 @@ public class GameManager : MonoBehaviour
             using (StreamReader stream = new StreamReader(path,
             System.Text.Encoding.UTF8))
             {
-                DataManipulator manipulator = new DataManipulator();
-                this._playerData = PlayerDataJson.ReadJson(manipulator.Decrypt(stream.ReadToEnd()));
+                /*DataManipulator manipulator = new DataManipulator();*/
+                this._playerData = PlayerDataJson.ReadJson(/*manipulator.Decrypt(*/stream.ReadToEnd())/*)*/;
             }
             //DataManipulator manipulator = new DataManipulator();
             //this._playerData = manipulator.Decrypt(path);

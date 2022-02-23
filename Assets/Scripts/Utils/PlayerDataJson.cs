@@ -18,9 +18,9 @@ public static class PlayerDataJson
         json += tab + "\"vie\":" + data.Vie + "," + newline;
         json += tab + "\"energie\":" + data.Energie + "," + newline;
         json += tab + "\"score\":" + data.Score + "," + newline;
-        json += tab + "\"volumeGeneral\":" + data.VolumeGeneral + "," + newline; 
-        json += tab + "\"volumeMusique\":" + data.VolumeMusique + "," + newline; 
-        json += tab + "\"volumeEffet\":" + data.VolumeEffet + "," + newline; 
+        json += tab + "\"volumeGeneral\":" + data.VolumeGeneral.ToString().Replace(',', '.') + "," + newline; 
+        json += tab + "\"volumeMusique\":" + data.VolumeMusique.ToString().Replace(',', '.') + "," + newline; 
+        json += tab + "\"volumeEffet\":" + data.VolumeEffet.ToString().Replace(',', '.') + "," + newline; 
         json += tab + "\"chestOpenList\":[";
         if (data.ListeCoffreOuvert.Length > 0)
         {
@@ -83,13 +83,13 @@ public static class PlayerDataJson
                     score = int.Parse(parametre[1].Replace(",", string.Empty));
                     break;
                 case "\"volumeGeneral\"":
-                    vlmGeneral = float.Parse(parametre[1].Replace(",", string.Empty));
+                    vlmGeneral = float.Parse(parametre[1].Replace(",", string.Empty).Replace('.', ','));
                     break;
                 case "\"volumeMusique\"":
-                    vlmMusique = float.Parse(parametre[1].Replace(",", string.Empty));
+                    vlmMusique = float.Parse(parametre[1].Replace(",", string.Empty).Replace('.', ','));
                     break;
                 case "\"volumeEffet\"":
-                    vlmEffet = float.Parse(parametre[1].Replace(",", string.Empty));
+                    vlmEffet = float.Parse(parametre[1].Replace(",", string.Empty).Replace('.', ','));
                     break;
                 case "\"chestOpenList\"":
                     if (parametre[1] == "[]")
