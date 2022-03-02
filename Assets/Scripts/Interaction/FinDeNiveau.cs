@@ -8,6 +8,7 @@ public class FinDeNiveau : MonoBehaviour
         if(collision.gameObject.CompareTag("Player"))
         {
             Debug.Log("Félicitation, le niveau est terminé.");
+            GameManager.Instance.SaveData();
             SceneManager.LoadScene("MainMenu");
         }
     }

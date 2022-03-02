@@ -122,3 +122,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gainPoint: 3
+  _clip: {fileID: 8300000, guid: 766a6737ab384a244b54f977c968f105, type: 3}

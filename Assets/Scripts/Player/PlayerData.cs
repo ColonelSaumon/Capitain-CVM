@@ -5,8 +5,30 @@ using UnityEngine;
 /// <summary>
 /// Représente les données de jeu
 /// </summary>
+[System.Serializable]
 public class PlayerData
 {
+    /// <summary>
+    /// Niveau sélectionné par l'utilisateur pour le vol. général
+    /// </summary>
+    [Range(-80, 0)]
+    private float _volumeGeneral = 0;
+    public float VolumeGeneral { get { return _volumeGeneral; } set { _volumeGeneral = value; } }
+
+    /// <summary>
+    /// Niveau sélectionné par l'utilisateur pour le vol. de la musique
+    /// </summary>
+    [Range(-80, 0)]
+    private float _volumeMusique = 0;
+    public float VolumeMusique { get { return _volumeMusique; } set { _volumeMusique = value; } }
+
+    /// <summary>
+    /// Niveau sélectionné par l'utilisateur pour le vol. de la musique
+    /// </summary>
+    [Range(-80, 0)]
+    private float _volumeEffet = 0;
+    public float VolumeEffet { get { return _volumeEffet; } set { _volumeEffet = value; } }
+
     /// <summary>
     /// Représente le nombre de points de vie du personnage
     /// </summary>
@@ -52,6 +74,9 @@ public class PlayerData
         this._vie = 0;
         this._energie = 0;
         this._score = 0;
+        this._volumeGeneral = 0;
+        this._volumeMusique = 0;
+        this._volumeEffet = 0;
         this.UIPerteEnergie = null;
         this.UIPerteVie = null;
         this.Gameover = null;
@@ -59,17 +84,22 @@ public class PlayerData
     }
 
     public PlayerData(int vie = 1, int energie = 2, int score = 0,
+        float volumeGeneral = 0, float volumeMusique = 0, float volumeEffet = 0,
         System.Action uiPerteEnergie = null, System.Action uiPerteVie = null,
         System.Action gameOver = null, List<string> ChestList = null)
     {
         this._vie = vie;
         this._energie = energie;
         this._score = score;
+        this._volumeGeneral = volumeGeneral;
+        this._volumeMusique = volumeMusique;
+        this._volumeEffet = volumeEffet;
         this.UIPerteEnergie += uiPerteEnergie;
         this.UIPerteVie += uiPerteVie;
         this.Gameover += gameOver;
-        if (ChestList == null)
-            this._chestOpenList = new List<string>();
+        this._chestOpenList = new List<string>();
+        if (ChestList != null)
+            this._chestOpenList = ChestList;
     }
 
     /// <summary>
